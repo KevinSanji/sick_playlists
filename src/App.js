@@ -145,17 +145,21 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.user ?
-        <div>
-          <h1>
-            {this.state.user.name}
-          </h1>
-          <PlaylistCounter playlists={playlistToRender}/>
-          <HoursCounter playlists={playlistToRender}/>
-          <Filter onTextChange={text => this.setState({filterString: text})}/>
-          {playlistToRender.map(playlist =>
-            <Playlist playlist={playlist}/>
-          )}
-        </div> : <button onClick={() => window.location='http://localhost:8888/login'}>Sign in with Spotify</button>
+          <div>
+            <h1>
+              {this.state.user.name}
+            </h1>
+            <PlaylistCounter playlists={playlistToRender}/>
+            <HoursCounter playlists={playlistToRender}/>
+            <Filter onTextChange={text => this.setState({filterString: text})}/>
+            {playlistToRender.map(playlist =>
+              <Playlist playlist={playlist}/>
+            )}
+          </div> : <button onClick={() => {
+            window.location = window.location.includes('localhost')
+            ? 'http://localhost:8888/login'
+            : 'https://sick-playlists.herokuapp.com/login'}
+          }>Sign in with Spotify</button>
         }
       </div>
     );
