@@ -2,46 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import queryString from 'query-string';
 
-let fakeServerData = {
-  user: {
-    name: 'Kevin',
-    playlists: [
-      {
-        name: 'My favorites',
-        songs: [
-          {name: 'Song1', duration: 1234},
-          {name: 'Song2', duration: 1234},
-          {name: 'Song3', duration: 1234}
-        ]
-      },
-      {
-        name: 'Discover weekly',
-        songs: [
-          {name: 'Song1', duration: 1234},
-          {name: 'Song2', duration: 1234},
-          {name: 'Song3', duration: 1234}
-        ]
-      },
-      {
-        name: 'Discover weekly',
-        songs: [
-          {name: 'Song1', duration: 1234},
-          {name: 'Song2', duration: 1234},
-          {name: 'Song3', duration: 1234}
-        ]
-      },
-      {
-        name: 'Discover weekly',
-        songs: [
-          {name: 'Song1', duration: 1234},
-          {name: 'Song2', duration: 1234},
-          {name: 'Song3', duration: 1234}
-        ]
-      }
-    ]
-  }
-};
-
 class PlaylistCounter extends Component {
   render() {
     return (
@@ -163,10 +123,13 @@ class App extends Component {
     let playlistToRender =
       this.state.user &&
       this.state.playlists
-        ? this.state.playlists.filter(playlist =>
-          playlist.name.toLowerCase().includes(
-            this.state.filterString.toLowerCase()))
-        : []
+        ? this.state.playlists.filter(playlist => {
+          let matchesPlaylist = playlist.name.toLowerCase().includes(
+            this.state.filterString.toLowerCase())
+          let matchesSong = playlist.songs.find(song => song.name.toLowerCase()
+            .includes(this.state.filterString.toLowerCase()))
+          return matchesPlaylist || matchesSong
+        }) :[]
     let name = 'Kevin'
     return (
       <div className="App">
